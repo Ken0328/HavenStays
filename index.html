@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HavenStays - Vacation Rentals & Beach Houses</title>
+    <style>
+        /* Base Reset & Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #222222;
+        }
+
+        /* Header / Navigation Bar */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #FF5A5F; /* Airbnb Signature Coral Red */
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        nav a {
+            color: #222222;
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #FF5A5F;
+        }
+
+        /* Hero Banner Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200') no-repeat center center/cover;
+            color: #ffffff;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 0 auto 28px auto;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #f1f1f1;
+        }
+
+        .btn-primary {
+            background-color: #FF5A5F;
+            color: #ffffff;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 90, 95, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #e0484d;
+            transform: translateY(-2px);
+        }
+
+        /* Highlight / Superhost Story Section */
+        .featured-host {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 20px;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .host-img {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .host-img img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .host-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .host-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #222222;
+            margin-bottom: 12px;
+        }
+
+        .host-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #717171;
+        }
+
+        /* Listing Grid Section (2x3) */
+        .grid-section {
+            background-color: #f7f7f7;
+            padding: 60px 20px;
+            border-top: 1px solid #ebebeb;
+        }
+
+        .grid-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .grid-section .subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #717171;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Airbnb-Style Card */
+        .listing-card {
+            background-color: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e0e0e0;
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        .listing-card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+        }
+
+        .listing-card img {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: #ffffff;
+            color: #222222;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 18px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .listing-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #222222;
+        }
+
+        .rating {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #222222;
+        }
+
+        .listing-description {
+            font-size: 0.88rem;
+            color: #717171;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .price-tag {
+            font-size: 1.05rem;
+            color: #222222;
+            margin-bottom: 14px;
+        }
+
+        .price-tag span {
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+
+        .btn-card {
+            background-color: #222222;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-card:hover {
+            background-color: #FF5A5F;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Top Navigation -->
+    <header>
+        <div class="logo">
+            <span>🏠 HavenStays</span>
+        </div>
+        <nav>
+            <a href="#">Explore</a>
+            <a href="#">Experiences</a>
+            <a href="#">Become a Host</a>
+            <a href="#">Log In</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Anatomy of a Dream Getaway</h1>
+        <p>Discover private villas, beachfront homes, and unique stays crafted for unforgettable travel experiences.</p>
+        <button class="btn-primary">Explore Stays</button>
+    </section>
+
+    <!-- Superhost Spotlight Section -->
+    <section class="featured-host">
+        <div class="host-img">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600" alt="Luxury Villa Architecture">
+        </div>
+        <div class="host-content">
+            <h2>About Our Stays</h2>
+            <p>HavenStays offers handpicked, verified homes worldwide. Whether you're looking for a peaceful mountain cabin, a coastal beach house, or a chic city loft, find homes with high-speed Wi-Fi, premium amenities, and exceptional Superhost hospitality.</p>
+        </div>
+    </section>
+
+    <!-- Featured Homes (2x3 Grid Section) -->
+    <section class="grid-section">
+        <h2>Featured Places to Stay</h2>
+        <p class="subtitle">Choose a stay below to plan your next weekend getaway or extended holiday.</p>
+
+        <div class="grid">
+            <!-- Card 1 -->
+            <div class="listing-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=500" alt="Beachfront Villa">
+                    <span class="badge">Guest Favorite</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <div class="listing-title">Sunset Beach Villa</div>
+                        <div class="rating">★ 4.98</div>
+                    </div>
+                    <div class="listing-description">Panoramic ocean views, private infinity pool, direct beach access, and outdoor dining terrace.</div>
+                    <div class="price-tag"><span>$285</span> / night</div>
+                    <button class="btn-card">Check Availability</button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="listing-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=500" alt="Mountain Chalet">
+                    <span class="badge">Superhost</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <div class="listing-title">Alpine Timber Chalet</div>
+                        <div class="rating">★ 4.95</div>
+                    </div>
+                    <div class="listing-description">Cozy stone fireplace, private outdoor hot tub, panoramic mountain views, and nearby ski access.</div>
+                    <div class="price-tag"><span>$195</span> / night</div>
+                    <button class="btn-card">Check Availability</button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="listing-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=500" alt="Modern Penthouse">
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <div class="listing-title">Downtown Glass Loft</div>
+                        <div class="rating">★ 4.88</div>
+                    </div>
+                    <div class="listing-description">Ultra-modern penthouse featuring floor-to-ceiling windows, high-speed Wi-Fi, and rooftop access.</div>
+                    <div class="price-tag"><span>$160</span> / night</div>
+                    <button class="btn-card">Check Availability</button>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="listing-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=500" alt="Forest Cabin">
+                    <span class="badge">Guest Favorite</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <div class="listing-title">Redwood Eco Cabin</div>
+                        <div class="rating">★ 4.97</div>
+                    </div>
+                    <div class="listing-description">Secluded forest retreat surrounded by nature, featuring a wraparound deck and fire pit.</div>
+                    <div class="price-tag"><span>$140</span> / night</div>
+                    <button class="btn-card">Check Availability</button>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="listing-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=500" alt="Tropical Villa">
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <div class="listing-title">Balinese Sanctuary Villa</div>
+                        <div class="rating">★ 4.92</div>
+                    </div>
+                    <div class="listing-description">Open-air living surrounded by lush tropical gardens, private plunge pool, and complimentary breakfast.</div>
+                    <div class="price-tag"><span>$210</span> / night</div>
+                    <button class="btn-card">Check Availability</button>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="listing-card">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=500" alt="Modern Farmhouse">
+                    <span class="badge">Superhost</span>
+                </div>
+                <div class="card-body">
+                    <div class="card-header-row">
+                        <div class="listing-title">Countryside Farmhouse</div>
+                        <div class="rating">★ 4.96</div>
+                    </div>
+                    <div class="listing-description">Spacious grounds, contemporary rustic interiors, chef's kitchen, and tranquil rural scenery.</div>
+                    <div class="price-tag"><span>$230</span> / night</div>
+                    <button class="btn-card">Check Availability</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
